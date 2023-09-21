@@ -36,3 +36,45 @@
     transform: rotate(360deg);
   }
 }
+
+.pirBtn1, .pirBtn2, .pirBtn3, .cam1, .cam2 {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.pirBtn1:hover, .pirBtn2:hover, .pirBtn3:hover, .cam1:hover, .cam2:hover {
+  background-color: rgba(0, 0, 0, 0.7); /* Change color on hover */
+}
+
+.pirBtn1 {
+  left: 45%;
+}
+
+.pirBtn2 {
+  left: 65%;
+}
+
+.pirBtn3 {
+  left: 85%;
+}
+
+.cam1 {
+  position: absolute;
+  top: 20%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+}
+
+.cam2 {
+  position: absolute;
+  top: 20%;
+  left: 85%;
+  transform: translate(-50%, -50%);
+}
+
