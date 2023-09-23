@@ -105,7 +105,7 @@ function ResponsiveAppBar() {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        Smart Van
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -173,6 +173,7 @@ function ResponsiveAppBar() {
                         ))}
                     </Box>
 
+                    {/* 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -201,7 +202,10 @@ function ResponsiveAppBar() {
                                 </MenuItem>
                             ))}
                         </Menu>
-                    </Box>
+                    </Box> 
+                    */}
+
+
                 </Toolbar>
             </Container>
         </AppBar>

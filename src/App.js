@@ -1,22 +1,66 @@
-import { InputLabel, MenuItem, FormControl, Icon, IconButton, Button } from '@mui/material';
+import { InputLabel, MenuItem, FormControl, IconButton, Button } from '@mui/material';
 import './App.css';
 import Header from './Components/Header';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Select from '@mui/material/Select';
 import { Refresh } from '@mui/icons-material';
+import { get } from './Services/api';
+import axios from 'axios';
 
 function App() {
-  const [Module, setModule] = React.useState('cam1');
+  const [Module, setModule] = React.useState('CAM01');
 
   const handleChange = (event) => {
     setModule(event.target.value);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await get('/api/van');
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const sendLineNotification = async () => {
+    const LINE_NOTIFY_API_URL = 'https://notify-api.line.me/api/notify';
+    const token = 'alVyzHhpd8jL8ZbAH3aUxPmyEc0bdsms5KYKh6HjiOe';
+  
+    const message = 'This is a test notification from your ReactJS application';
+  
+    try {
+      await axios.post(
+        LINE_NOTIFY_API_URL,
+        {
+          message,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log('Notification sent successfully!');
+    } catch (error) {
+      console.error('Error sending notification:', error);
+    }
+  };
+  
+
+
+  
 
   return (
     <div className="h-max" >
       <Header />
       <div style={{ paddingTop: "80px", }}>
+      <button type="button" class="btn btn-danger" onClick={sendLineNotification}>test</button>
         <div id="section1" className='flex justify-center'>
 
           <div style={{ position: 'relative' }}>
@@ -42,7 +86,7 @@ function App() {
 
           </div>
         </div>
-        <div id="section2" class="sm:p-2 md:p-5" style={{ backgroundColor: "#829BDD" }}>
+        <div id="section2" className="sm:p-2 md:p-5" style={{ backgroundColor: "#829BDD" }}>
 
           <div className='flex flex-col md:flex-row gap-4 bg-white p-4 rounded-md '>
             <div className='md:w-1/2'>
