@@ -1,0 +1,13 @@
+{
+    "name": "van-iot",
+    "version": "1.0.0",
+    "runtime": "python",
+    "entrypoint": "Server.py",
+    "routes": [
+      {
+        "src": "/build",
+        "dest": "/"
+      }
+    ]
+  }
+  
