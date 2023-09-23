@@ -5,6 +5,7 @@ const api = axios.create({
 });
 
 export const get = (url, params) => api.get(url, { params });
+export const onlyget = (url) => api.get(url);
 export const post = (url, data) => api.post(url, data);
 export const put = (url, data) => api.put(url, data);
 export const del = (url) => api.delete(url);

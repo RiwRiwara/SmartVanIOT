@@ -4,11 +4,23 @@ import Header from './Components/Header';
 import React, { useEffect } from 'react';
 import Select from '@mui/material/Select';
 import { Refresh } from '@mui/icons-material';
-import { get } from './Services/api';
-import axios from 'axios';
+import { get, onlyget } from './Services/api';
+
+const cleanVanData = (data) => {
+  return {
+    van_id: data.van_id,
+    time: new Date(data.timestamp.$date).toLocaleTimeString(),
+    date: new Date(data.timestamp.$date).toLocaleDateString(),
+    driver: data.driver_name,
+    passenger: data.passenger,
+    status: data.status,
+    speed: `${data.speed} Km/hr`
+  };
+};
 
 function App() {
   const [Module, setModule] = React.useState('CAM01');
+  const [vanData, setVanData] = React.useState({});
 
   const handleChange = (event) => {
     setModule(event.target.value);
@@ -17,8 +29,9 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await get('/api/van');
+        const response = await onlyget('/api/van/get-van?van_id=VAN01');
         console.log(response.data);
+        setVanData(cleanVanData(response.data));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -27,40 +40,12 @@ function App() {
     fetchData();
   }, []);
 
-  const sendLineNotification = async () => {
-    const LINE_NOTIFY_API_URL = 'https://notify-api.line.me/api/notify';
-    const token = 'alVyzHhpd8jL8ZbAH3aUxPmyEc0bdsms5KYKh6HjiOe';
-  
-    const message = 'This is a test notification from your ReactJS application';
-  
-    try {
-      await axios.post(
-        LINE_NOTIFY_API_URL,
-        {
-          message,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log('Notification sent successfully!');
-    } catch (error) {
-      console.error('Error sending notification:', error);
-    }
-  };
-  
 
-
-  
 
   return (
     <div className="h-max" >
       <Header />
       <div style={{ paddingTop: "80px", }}>
-      <button type="button" class="btn btn-danger" onClick={sendLineNotification}>test</button>
         <div id="section1" className='flex justify-center'>
 
           <div style={{ position: 'relative' }}>
@@ -95,31 +80,31 @@ function App() {
 
               <div className='flex justify-between text-lg'>
                 <span className='font-bold mr-4'>VAN ID</span>
-                Van-01
+                {vanData.van_id}
               </div>
               <div className='flex justify-between text-lg'>
                 <span className='font-bold mr-4'>Time</span>
-                12:00:00
+                {vanData.time || "00:00:00"}
               </div>
               <div className='flex justify-between text-lg'>
                 <span className='font-bold mr-4'>Date</span>
-                09/09/2023
+                {vanData.date || "00/00/0000"}
               </div>
               <div className='flex justify-between text-lg'>
                 <span className='font-bold mr-4'>Driver</span>
-                John Doe
+                {vanData.driver}
               </div>
               <div className='flex justify-between text-lg'>
                 <span className='font-bold mr-4'>Passenger</span>
-                10/10
+                {vanData.passenger}/10
               </div>
               <div className='flex justify-between text-lg'>
                 <span className='font-bold mr-4'>Status</span>
-                Driving
+                {vanData.status}
               </div>
               <div className='flex justify-between text-lg'>
                 <span className='font-bold mr-4'>Speed</span>
-                60 Km/hr
+                {vanData.speed}
               </div>
             </div>
             <div className='md:w-1/2 mt-4 md:mt-0'>
@@ -165,7 +150,7 @@ function App() {
                   Working
                 </div>
                 {
-                  Module === "CAM01" ||  Module === "CAM02" ?
+                  Module === "CAM01" || Module === "CAM02" ?
                     <div>
                       <Button variant="contained" color="primary">
                         View Video
