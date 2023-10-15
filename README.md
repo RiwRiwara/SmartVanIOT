@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# SmartvanAPI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Setup
+### setup SafetyvanAPI first 
+    1. Constants.py for set value config
+    - Host is mean address of API you can set by run "ipconfig" in terminal and find ipv4, copy it and paste in Host.
+    - PORT you can change to you need but dont dubplicate another port.
+    - MONGODB_URL and another mongo is your data .
+    - LINE_NOTIFY_TOKEN is token for post notification to line. you van request api in line api
+    - MONGODB_DB MONGODB_COLLECTION_PIR MONGODB_COLLECTION_VAN  LINE_NOTIFY_API_URL -> not change
 
-## Available Scripts
+    - after setup run main.py
 
-In the project directory, you can run:
+    ```
 
-### `npm start`
+    Constants = {
+        "HOST": "192.168.1.10",
+        "PORT": 5565,
+        
+        "MONGODB_URL": "mongodb+srv://riwara:Gso0u8f4JMR36d5G@newcluster.fxldupt.mongodb.net/?retryWrites=true&w=majority",
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+        "MONGODB_DB": "testDB",
+        "MONGODB_COLLECTION_PIR": "pirdata",
+        "MONGODB_COLLECTION_CAM": "camdata",
+        "MONGODB_COLLECTION_VAN": "vanData",
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+        "LINE_NOTIFY_TOKEN":"alVyzHhpd8jL8ZbAH3aUxPmyEc0bdsms5KYKh6HjiOe",
+        "LINE_NOTIFY_API_URL":"https://notify-api.line.me/api/notify"
+    }
+    ```
 
-### `npm test`
+### setup Safetyvan ui 
+    - go to .env and set information
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### setup module
+ 1. PIR sensor 
+    - you can get code .ino from ModuleCodes folder
+    - don't forget setup module that write in header of .ino
+ 2. Cam
+    - You must install by
+    - Connect usb with your laptop.
+    - Enter to https://tasmota.github.io/install/
+    - click dropdown select "Tasmota32 Webvam (English)".
+    - Click connect and select usb port that conect camera.
+    - Install device and click "Erase Device"
+    - wait loading to 100% and after change wifi to something like "Tasmota"
+    - when connect it will redirect to wifi setting Enter your wifi and password (SSID and password same in .ino )
+    - If connect successfully it will show IP looklike http://192.168.1.135 
+    - Return to your internet/wifi and try to run http://192.168.1.135 it will show camere result
+    - And last setting it same with 2 cam module and remember IP . Use it to .env file REACT_APP_CAM1_URL and REACT_APP_CAM1_URL
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### How to run 
+- Safety van reactjs
+    `npm start`
+- Safety van API
+    `python main.py`

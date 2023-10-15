@@ -72,13 +72,20 @@ function App() {
       console.error('Error fetching data:', error);
     }
   };
+  const OpenCam = (cam_id) => {
+    if (cam_id === "CAM01"){
+      window.open(process.env.REACT_APP_CAM1_URL);
+    }else{
+      window.open(process.env.REACT_APP_CAM2_URL);
+
+    }
+  }
 
   const fetchModuleData = async (type, id) => {
     setIsLoding_2(true);
     var sensor_type = type === "CAM" ? "get-camera" : "get-pir";
 
     await onlyget('/api/sensor/' + sensor_type + '?sensor_id=' + id).then((response) => {
-      console.log(response.data);
       if (type === "CAM") {
         setCAMDATA(cleanCamData(response.data));
       } else {
@@ -108,19 +115,19 @@ function App() {
               src='https://firstdraw.blob.core.windows.net/cardimgs/van.png'
               alt='Van'
             />
-            <button className='pirBtn1' onClick={() => handleChange({target : {value:"PIR01"}})} >
+            <button className='pirBtn1' onClick={() => handleChange({ target: { value: "PIR01" } })} >
               PIR01
             </button>
-            <button className='pirBtn2' onClick={() => handleChange({target : {value:"PIR02"}})}>
+            <button className='pirBtn2' onClick={() => handleChange({ target: { value: "PIR02" } })}>
               PIR02
             </button>
-            <button className='pirBtn3' onClick={() => handleChange({target : {value:"PIR03"}})}>
+            <button className='pirBtn3' onClick={() => handleChange({ target: { value: "PIR03" } })}>
               PIR03
             </button>
-            <button className='cam1'onClick={() => handleChange({target : {value:"CAM01"}})} >
+            <button className='cam1' onClick={() => handleChange({ target: { value: "CAM01" } })} >
               CAM1
             </button>
-            <button className='cam2' onClick={() => handleChange({target : {value:"CAM02"}})}>
+            <button className='cam2' onClick={() => handleChange({ target: { value: "CAM02" } })}>
               CAM2
             </button>
 
@@ -230,15 +237,15 @@ function App() {
                     {
                       Module === "CAM01" || Module === "CAM02" ?
                         <div>
-                          <Button variant="contained" color="primary">
+                          <Button variant="contained" color="primary" onClick={() => OpenCam(CAMDATA.cam_id)}>
                             View Video
                           </Button>
                         </div>
                         :
                         <div className='flex justify-between text-lg'>
-                        <span className='font-bold mr-4'>Value</span>
-                        {PIRDATA.value == "1" ? "Motion Detected" : "No Motion Detected"}
-                      </div>
+                          <span className='font-bold mr-4'>Value</span>
+                          {PIRDATA.value == "1" ? "Motion Detected" : "No Motion Detected"}
+                        </div>
                     }
                   </div>
                 </>

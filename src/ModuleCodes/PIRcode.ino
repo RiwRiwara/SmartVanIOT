@@ -1,25 +1,44 @@
+// Code for PIR sensor and buzzer sensor
+/*
+  Setup:
+
+  # Important
+  - ModuleName PIR01 it will be id of moudle use for save to database.
+    You will have 3 nodeMCU board so you need to change it to PIR02 and PIR03 and upload to each board.
+
+  - Check the pin number for PIR sensor and buzzer sensor
+  - ESP_ID is mean Id of board you can change it to anything you want
+  - ssid and password is your wifi name and password
+
+  - serverAddress is your server address of Safetyvan server API
+
+  [Not chnage]
+  - pirEndpoint is your endpoint for PIR sensor
+  - cameraEndpoint is your endpoint for camera sensor
+
+*/
+
+
+// Start code
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
 
 const int pirPin01 = D2;
-const String ModuleName = "PIR03";
+const int buzzerPin = D1;
+const String ModuleName = "PIR01";
 
 const String ESP_ID = "ESP001";
 
-// Use only wifi 2.4Ghz
 const char* ssid = "Kaboom_2.4G";
 const char* password = "0406092549";
 
-// Use same flask server
 const char* serverAddress = "192.168.1.10";
 const int serverPort = 5565;
 
-// Do not edit
 const String SensorDefalut = "/api/sensor/";
 const String pirEndpoint = "/api/sensor/pir";
 const String cameraEndpoint = "/api/sensor/camera";
-
 
 void connectToWiFi() {
   Serial.print("Connecting to ");
@@ -90,6 +109,7 @@ void postDataToPIR(const String& ID, const String& val) {
 void setup() {
 
   pinMode(pirPin01, INPUT);
+  pinMode(buzzerPin, OUTPUT);
 
   Serial.begin(9600);
   delay(10);
@@ -108,14 +128,19 @@ void loop() {
 
   delay(5000);
   int PIR01 = digitalRead(pirPin01);
-    Serial.println(ModuleName);
+  int buzzer = digitalRead(buzzerPin);
+
 
   if (PIR01 == 1) {
     postDataToPIR(ModuleName, "1");
+    digitalWrite(buzzerPin, HIGH);
     Serial.println(ModuleName+" Detecting : save to server!");
   } else {
     postDataToPIR(ModuleName, "0");
+    digitalWrite(buzzerPin, LOW);
     Serial.println(ModuleName+" Undetecting : save to server! ");
   }
+
+
   
 }
