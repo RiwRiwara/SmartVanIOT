@@ -2,7 +2,8 @@ import axios from "axios";
 
 const sendLineNotification = async (message) => {
     try {
-      await axios.post("http://192.168.1.10:5565/api/sensor/send_notification",
+      // await axios.post("http://192.168.1.10:5565/api/sensor/send_notification",
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/sensor/send_notification`,
         {
           message,
         },
