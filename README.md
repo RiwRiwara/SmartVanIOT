@@ -2,7 +2,7 @@
 
 ## Setup
 ### setup SafetyvanAPI first 
-    1. Constants.py for set value config
+ 1. Constants.py for set value config
     - Host is mean address of API you can set by run "ipconfig" in terminal and find ipv4, copy it and paste in Host.
     - PORT you can change to you need but dont dubplicate another port.
     - MONGODB_URL and another mongo is your data .
@@ -12,7 +12,6 @@
     - after setup run main.py
 
     ```
-
     Constants = {
         "HOST": "192.168.1.10",
         "PORT": 5565,
@@ -30,7 +29,7 @@
     ```
 
 ### setup Safetyvan ui 
-    - go to .env and set information
+ 1. go to .env and set information
 
 ### setup module
  1. PIR sensor 
