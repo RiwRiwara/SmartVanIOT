@@ -2,13 +2,12 @@ import {
     AppBar, Container, Tooltip, Typography, Box, IconButton, MenuItem,
     Menu, Toolbar, Button, Avatar, ListItem, List, ListItemButton, ListItemText, Divider, ListItemIcon, Drawer
 } from '@mui/material';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import * as React from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
+import { CarRental } from '@mui/icons-material';
 
 
-const pages = ['About', 'Pricing', 'Contact'];
+const pages = ['Van', 'About', 'Pricing', 'Contact', 'Setting'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
@@ -35,11 +34,11 @@ function ResponsiveAppBar() {
             onKeyDown={toggleDrawer()}
         >
             <List>
-                {['VAN01', 'VAN02', 'VAN03'].map((text, index) => (
+                {['VAN01',].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
-                                <MailIcon />
+                                <CarRental />
                             </ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItemButton>
@@ -67,6 +66,11 @@ function ResponsiveAppBar() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleRedirect = (page) => {
+        var lowcasepage = page.toLowerCase();
+        window.location.href = `/${lowcasepage}`;
     };
 
     return (
@@ -165,7 +169,7 @@ function ResponsiveAppBar() {
                         {pages.map((page) => (
                             <Button
                                 key={page}
-                                onClick={handleCloseNavMenu}
+                                onClick={() => handleRedirect(page)}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
                                 {page}
@@ -173,38 +177,7 @@ function ResponsiveAppBar() {
                         ))}
                     </Box>
 
-                    {/* 
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box> 
-                    */}
-
+                   
 
                 </Toolbar>
             </Container>

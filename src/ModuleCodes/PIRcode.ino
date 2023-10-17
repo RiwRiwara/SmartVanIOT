@@ -29,6 +29,7 @@ const int buzzerPin = D1;
 const String ModuleName = "PIR01";
 
 const String ESP_ID = "ESP001";
+const String VAN_ID = "VAN001";
 
 const char* ssid = "Kaboom_2.4G";
 const char* password = "0406092549";
@@ -100,7 +101,10 @@ void postData(const String& endpoint, const String& data) {
 }
 
 void postDataToPIR(const String& ID, const String& val) {
-  String dataToSend = "{\"sensor_id\": \"" + ID + "\", \"status\": \"triggered\", \"value\": \"" + val + "\"}";
+  String dataToSend = "{ \"sensor_id\": \"" + ID + "\",
+                         \"status\":    \"triggered\",
+                         \"van_id\":     \"" + VAN_ID + "\",
+                         \"value\":    \"" + val +"\"}";
   Serial.println(dataToSend);
   postData(pirEndpoint, dataToSend);
 }
