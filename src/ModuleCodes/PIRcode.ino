@@ -96,17 +96,40 @@ void postData(const String& endpoint, const String& data) {
     Serial.print("Error in HTTP request: ");
     Serial.println(httpCode);
   }
-
   http.end();
 }
 
+
 void postDataToPIR(const String& ID, const String& val) {
-  String dataToSend = "{ \"sensor_id\": \"" + ID + "\",
-                         \"status\":    \"triggered\",
-                         \"van_id\":     \"" + VAN_ID + "\",
-                         \"value\":    \"" + val +"\"}";
+  String dataToSend = "{ \"sensor_id\": \"" + ID + "\","
+                     " \"status\": \"triggered\","
+                     " \"van_id\": \"" + VAN_ID + "\","
+                     " \"value\": \"" + val + "\"}";
   Serial.println(dataToSend);
   postData(pirEndpoint, dataToSend);
+}
+void sendNotification(const String& message, const String& vanID) {
+  WiFiClient client;
+  
+  HTTPClient http;
+  http.begin(client, "http://" + String(serverAddress) + ":" + String(serverPort) + "/send_notification");
+  http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+  String payload = "message=" + message + "&vanID=" + vanID;
+  int httpCode = http.POST(payload);
+
+  if (httpCode == HTTP_CODE_OK) {
+    String response = http.getString();
+    Serial.println("Notification response from server:");
+    Serial.println(response);
+    String message = "PIR sensor triggered in " + ModuleName;
+    sendNotification(message, VAN_ID);
+    
+  } else {
+    Serial.print("Error in notification request: ");
+    Serial.println(httpCode);
+  }
+  http.end();
 }
 
 

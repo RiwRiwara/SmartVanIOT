@@ -79,11 +79,13 @@ function VanSetting() {
 
     return (
         <div className="h-max flex justify-center " style={{ paddingTop: '80px' }}>
-            <div className='bg-stone-100 p-4 rounded-md'>
+            <div className=' p-4 rounded-md'>
 
                 <Grid container p={{ md: 5 }} spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     <Grid item xs={4} sm={8} md={12} key={1}>
-                        <p style={{ fontSize: '2em', fontWeight: 'bold' }}>VAN ID: {van_id}</p>
+                        <p style={{ fontSize: '2em', fontWeight: 'bold' }}>Configure Van</p>
+                        <p>ปรับแก้ไขข้อมูลรถ</p>
+                        <p style={{ fontSize: '1em', fontWeight: 'bold' }}>VAN ID: {van_id}</p>
                     </Grid>
                     <Grid item xs={2} sm={4} md={6} key={2}>
                         <TextField
@@ -109,7 +111,7 @@ function VanSetting() {
                         <TextField
                             sx={{ width: '100%' }}
                             id="image_data"
-                            label="Image URL"
+                            label="Image URL (ใส่ลิ้งรูปภาพ))"
                             variant="outlined"
                             value={vanData.image_data || ''}
                             onChange={handleInputChange}
@@ -156,7 +158,7 @@ function VanSetting() {
                     </Grid>
                     <Grid item xs={2} sm={4} md={6} key={4}>
                         <Button variant="contained" color="primary" onClick={handleSave}>
-                            Save
+                            Update Van Data
                         </Button>
                     </Grid>
                 </Grid>

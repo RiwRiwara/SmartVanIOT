@@ -7,8 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { CarRental } from '@mui/icons-material';
 
 
-const pages = ['Van', 'About', 'Pricing', 'Contact', 'Setting'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Van', 'About', 'Pricing', 'Contact'];
 
 function ResponsiveAppBar() {
     const [state, setState] = React.useState({
@@ -34,13 +33,17 @@ function ResponsiveAppBar() {
             onKeyDown={toggleDrawer()}
         >
             <List>
-                {['VAN01',].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <CarRental />
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
+
+                {pages.map((page) => (
+                    <ListItem key={page} disablePadding>
+
+                        <ListItemButton
+                            key={page}
+                            onClick={() => handleRedirect(page)}
+                            sx={{ my: 2, color: 'black', display: 'block' }}
+                        >
+                            <ListItemText primary={page} />
+
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -177,7 +180,7 @@ function ResponsiveAppBar() {
                         ))}
                     </Box>
 
-                   
+
 
                 </Toolbar>
             </Container>

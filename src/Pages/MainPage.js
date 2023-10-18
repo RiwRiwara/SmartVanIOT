@@ -18,22 +18,21 @@ function MainPage() {
   const [CAMDATA, setCAMDATA] = React.useState({});
 
   const refreshModule = () => {
-    sendLineNotification("Refresh Module");
     switch (Module) {
       case "CAM01":
-        fetchModuleData("CAM", "CAM01");
+        fetchModuleData("CAM", "CAM01", van_id);
         break;
       case "CAM02":
-        fetchModuleData("CAM", "CAM02");
+        fetchModuleData("CAM", "CAM02", van_id);
         break;
       case "PIR01":
-        fetchModuleData("PIR", "PIR01")
+        fetchModuleData("PIR", "PIR01", van_id)
         break;
       case "PIR02":
-        fetchModuleData("PIR", "PIR02")
+        fetchModuleData("PIR", "PIR02", van_id)
         break;
       case "PIR03":
-        fetchModuleData("PIR", "PIR03")
+        fetchModuleData("PIR", "PIR03", van_id)
         break;
       default:
         break;
@@ -44,19 +43,19 @@ function MainPage() {
     setModule(event.target.value);
     switch (event.target.value) {
       case "CAM01":
-        fetchModuleData("CAM", "CAM01");
+        fetchModuleData("CAM", "CAM01", van_id);
         break;
       case "CAM02":
-        fetchModuleData("CAM", "CAM02");
+        fetchModuleData("CAM", "CAM02", van_id);
         break;
       case "PIR01":
-        fetchModuleData("PIR", "PIR01")
+        fetchModuleData("PIR", "PIR01", van_id)
         break;
       case "PIR02":
-        fetchModuleData("PIR", "PIR02")
+        fetchModuleData("PIR", "PIR02",van_id)
         break;
       case "PIR03":
-        fetchModuleData("PIR", "PIR03")
+        fetchModuleData("PIR", "PIR03",van_id)
         break;
       default:
         break;
@@ -84,11 +83,11 @@ function MainPage() {
     }
   }
 
-  const fetchModuleData = async (type, id) => {
+  const fetchModuleData = async (type, id, van_id) => {
     setIsLoding_2(true);
     var sensor_type = type === "CAM" ? "get-camera" : "get-pir";
 
-    await onlyget('/api/sensor/' + sensor_type + '?sensor_id=' + id).then((response) => {
+    await onlyget('/api/sensor/' + sensor_type + '?sensor_id=' + id + '&van_id=' + van_id).then((response) => {
       if (type === "CAM") {
         setCAMDATA(cleanCamData(response.data));
       } else {
@@ -97,6 +96,7 @@ function MainPage() {
       setIsLoding_2(false);
     }).catch((error) => {
       console.error('Error fetching data:', error);
+      setPIRDATA({});
       setIsLoding_2(false);
     });
   };

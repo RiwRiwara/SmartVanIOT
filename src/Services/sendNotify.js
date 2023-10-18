@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const sendLineNotification = async (message, isEnable) => {
+const sendLineNotification = async (message, vanID) => {
     try {
       await axios.post(`${process.env.REACT_APP_API_URL}/api/sensor/send_notification`,
         {
           message,
-          isEnable
+          vanID
         },
         {
           headers: {

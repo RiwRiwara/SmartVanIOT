@@ -44,41 +44,73 @@ function AddVan() {
             [id]: value,
         }));
     };
+    const ValidateVanData = (vanData) => {
+        if (vanData.van_id === undefined || vanData.van_id === "") {
+            return false;
+        }
+        if (vanData.driver_name === undefined || vanData.driver_name === "") {
+            return false;
+        }
+        return true;
+    }
+    const handleRedirect = (page) => {
+        var lowcasepage = page.toLowerCase();
+        window.location.href = `/${lowcasepage}`;
+    };
 
     const handleSave = async () => {
-        await post('/api/van/van', vanData).then((response) => {
-            setVanData(response.data);
-            setToggle(!toggle);
-            setOpen(true);
-        }).catch((error) => {
-            console.log(error);
+        if (ValidateVanData(vanData)) {
+            await post('/api/van/van', vanData).then((response) => {
+                setVanData(response.data);
+                setToggle(!toggle);
+                setOpen(true);
+            }).catch((error) => {
+                console.log(error);
+            }
+            );
+            handleRedirect("van");
+        } else {
+            alert("กรุณากรอกข้อมูลให้ครบถ้วน");
         }
-        );
+
     };
 
     return (
         <div className="h-max flex justify-center " style={{ paddingTop: '80px' }}>
-            <div className='bg-stone-100 p-4 rounded-md'>
+            <div className='p-4 rounded-md'>
 
                 <Grid container p={{ md: 5 }} spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     <Grid item xs={4} sm={8} md={12} key={1}>
                         <p style={{ fontSize: '2em', fontWeight: 'bold' }}>Create New Van</p>
+                        <p>เพิ่มรถใหม่</p>
+                    </Grid>
+
+                    <Grid item xs={2} sm={4} md={6} key={2}>
+                        <TextField
+                            sx={{ width: '100%' }}
+                            id="van_id"
+                            label="VAN ID (ทะเบียนเลขรถ)"
+                            variant="outlined"
+                            value={vanData.van_id}
+                            onChange={handleInputChange}
+                        />
                     </Grid>
                     <Grid item xs={2} sm={4} md={6} key={2}>
                         <TextField
                             sx={{ width: '100%' }}
                             id="driver_name"
-                            label="Driver Name"
+                            label="Driver Name (ชื่อคนขับ))"
                             variant="outlined"
                             value={vanData.driver_name || ''}
                             onChange={handleInputChange}
                         />
                     </Grid>
+
                     <Grid item xs={2} sm={4} md={6} key={3}>
                         <TextField
                             sx={{ width: '100%' }}
                             id="status"
-                            label="Status"
+                            label="Status (สถานะ) "
                             variant="outlined"
                             value={vanData.status || ''}
                             onChange={handleInputChange}
@@ -88,7 +120,7 @@ function AddVan() {
                         <TextField
                             sx={{ width: '100%' }}
                             id="image_data"
-                            label="Image URL"
+                            label="Image URL (URL รูปภาพ)"
                             variant="outlined"
                             value={vanData.image_data || ''}
                             onChange={handleInputChange}
@@ -98,7 +130,7 @@ function AddVan() {
                         <TextField
                             sx={{ width: '100%' }}
                             id="passenger"
-                            label="Number Passengers"
+                            label="Number Passengers (จำนวนผู้โดยสาร)"
                             variant="outlined"
                             type='number'
                             value={vanData.passenger || 0}
@@ -109,7 +141,7 @@ function AddVan() {
                         <TextField
                             sx={{ width: '100%' }}
                             id="speed"
-                            label="Speed"
+                            label="Speed (ความเร็ว)"
                             type='number'
                             variant="outlined"
                             value={vanData.speed || ''}
@@ -135,7 +167,7 @@ function AddVan() {
                     </Grid>
                     <Grid item xs={2} sm={4} md={6} key={4}>
                         <Button variant="contained" color="primary" onClick={handleSave}>
-                            Save
+                            Create
                         </Button>
                     </Grid>
                 </Grid>
@@ -144,7 +176,7 @@ function AddVan() {
                 open={open}
                 autoHideDuration={6000}
                 onClose={handleClose}
-                message="Update Success"
+                message="Add Van Success"
                 action={
                     <React.Fragment>
                         <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
