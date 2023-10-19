@@ -36,7 +36,7 @@ function Home() {
                 const response = await onlyget('/api/van/get-all-van');
                 const vanData = response.data.map((van, index) => ({
                     van_id: van.van_id,
-                    imageUrl: "https://www.bkkkids.com/wp-content/uploads/2014/08/SchoolVan.jpg",
+                    imageUrl: van.image_data || "https://www.bkkkids.com/wp-content/uploads/2014/08/SchoolVan.jpg" ,
                     title: van.van_id,
                     description: `Driver name: ${van.driver_name}`,
                     id: index + 1
@@ -67,11 +67,11 @@ function Home() {
                     <Button variant="contained" href="/add-van" style={{ backgroundColor: "#829BDD", color: "white" }}>Add Van</Button>
                 </p>
 
-                <div id="section1" className='flex flex-wrap justify-center gap-4'>
+                <div id="section1" className='container mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center gap-4'>
                     {vanDataList.map((van, index) => (
                         <>
                             {van.title !== null && (
-                                <div key={van.id} className='w-1/4 p-4'>
+                                <div key={van.id} className='w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4'>
                                     <VanCard
                                         key={van.id}
                                         imageUrl={van.imageUrl}
@@ -85,8 +85,8 @@ function Home() {
                             )}
                         </>
                     ))}
-
                 </div>
+
             </div>
         </div>
     );

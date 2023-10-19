@@ -173,14 +173,14 @@ function MainPage() {
                     {vanData.driver}
                   </div>
                   <div className='flex justify-between text-lg'>
-                    <span className='font-bold mr-4'>Passenger</span>
-                    {vanData.passenger}/10
-                  </div>
-                  <div className='flex justify-between text-lg'>
-                    <span className='font-bold mr-4'>Status</span>
+                    <span className='font-bold mr-4 '>Driver Telephone</span>
                     {vanData.status}
                   </div>
-                  <div className='flex justify-between text-lg'>
+                  <div className='flex justify-between text-lg text-gray-500'>
+                    <span className='font-bold mr-4 '>Passenger</span>
+                    {vanData.passenger}/10
+                  </div>
+                  <div className='flex justify-between text-lg text-gray-500'>
                     <span className='font-bold mr-4'>Speed</span>
                     {vanData.speed}
                   </div>

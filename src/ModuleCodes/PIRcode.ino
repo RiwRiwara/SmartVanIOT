@@ -29,7 +29,7 @@ const int buzzerPin = D1;
 const String ModuleName = "PIR01";
 
 const String ESP_ID = "ESP001";
-const String VAN_ID = "VAN001";
+const String VAN_ID = "VAN01";
 
 const char* ssid = "Kaboom_2.4G";
 const char* password = "0406092549";
@@ -112,7 +112,7 @@ void sendNotification(const String& message, const String& vanID) {
   WiFiClient client;
   
   HTTPClient http;
-  http.begin(client, "http://" + String(serverAddress) + ":" + String(serverPort) + "/send_notification");
+  http.begin(client, "http://" + String(serverAddress) + ":" + String(serverPort) + "/api/sensor/send_notification");
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
   String payload = "message=" + message + "&vanID=" + vanID;
